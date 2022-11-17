@@ -221,7 +221,6 @@ public class SWAPISpeciesTests {
                void checkThatFilmsFieldDoesntReturnANull() {
                    Assumptions.assumeTrue(speciesDTO.getFilms() != null);
                }
-
                
            }
 
@@ -250,13 +249,9 @@ public class SWAPISpeciesTests {
                    Assertions.assertTrue(parsableDate);
                }
 
-
            }
 
-
        }
-
-
 
     }
 
