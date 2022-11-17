@@ -1,8 +1,10 @@
 package com.sparta.framework.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+
 
 public class SpeciesDTO {
 
@@ -109,5 +111,26 @@ public class SpeciesDTO {
 
 	public String getAverageLifespan(){
 		return averageLifespan;
+	}
+
+	@Override
+	public String toString() {
+		return "SpeciesDTO{" +
+				"films=" + films +
+				", skinColors='" + skinColors + '\'' +
+				", homeworld='" + homeworld + '\'' +
+				", edited='" + edited + '\'' +
+				", created='" + created + '\'' +
+				", eyeColors='" + eyeColors + '\'' +
+				", language='" + language + '\'' +
+				", classification='" + classification + '\'' +
+				", people=" + people +
+				", url='" + url + '\'' +
+				", hairColors='" + hairColors + '\'' +
+				", averageHeight='" + averageHeight + '\'' +
+				", name='" + name + '\'' +
+				", designation='" + designation + '\'' +
+				", averageLifespan='" + averageLifespan + '\'' +
+				'}';
 	}
 }

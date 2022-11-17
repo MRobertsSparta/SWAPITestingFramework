@@ -1,3 +1,5 @@
+package com.sparta.framework.dto;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sparta.framework.dto.SpeciesDTO;
 
@@ -31,5 +33,15 @@ public class SpeciesCollectionDTO{
 
 	public List<SpeciesDTO> getResults(){
 		return results;
+	}
+
+	@Override
+	public String toString() {
+		return "SpeciesCollectionDTO{" +
+				"next='" + next + '\'' +
+				", previous=" + previous +
+				", count=" + count +
+				", results=" + results +
+				'}';
 	}
 }
