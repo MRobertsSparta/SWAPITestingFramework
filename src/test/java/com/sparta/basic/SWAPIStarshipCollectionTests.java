@@ -12,7 +12,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class SWAPIStarshipTests {
+public class SWAPIStarshipCollectionTests {
 
     private static HttpClient client;
     private HttpRequest request;
@@ -21,7 +21,7 @@ public class SWAPIStarshipTests {
     private static ObjectMapper mapper;
     private static StarshipCollectionDTO dto;
 
-    private final static String URL = "https://swapi.dev/api/starships/1";
+    private final static String URL = "https://swapi.dev/api/starships?format=json";
 
     @BeforeAll
     static void setupAll() {
@@ -60,6 +60,4 @@ public class SWAPIStarshipTests {
         }
 
     }
-
-
 }
