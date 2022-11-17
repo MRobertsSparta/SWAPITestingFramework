@@ -2,6 +2,7 @@ package com.sparta.basic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.framework.dto.StarshipCollectionDTO;
+import com.sparta.framework.dto.StarshipDTO;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -12,31 +13,33 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+
 public class SWAPIStarshipTests {
 
     private static HttpClient client;
-    private HttpRequest request;
-    private HttpResponse response;
+    private static HttpRequest request;
+    private static HttpResponse response;
 
     private static ObjectMapper mapper;
-    private static StarshipCollectionDTO dto;
+    private static StarshipDTO dto;
 
-    private final static String URL = "https://swapi.dev/api/starships/1";
+    private final static String URL = "https://swapi.dev/api/starships/2?format=json";
 
     @BeforeAll
     static void setupAll() {
         client = HttpClient.newHttpClient();
         mapper = new ObjectMapper();
 
-        try {
-            dto = mapper.readValue(new URL(URL), StarshipCollectionDTO.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @BeforeEach
-    void setup(TestInfo testInfo) {
+        try {
+            dto = mapper.readValue(new URL(URL), StarshipDTO.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             request = HttpRequest
                     .newBuilder()
@@ -60,6 +63,85 @@ public class SWAPIStarshipTests {
         }
 
     }
+
+    @Nested
+    @DisplayName("Response Body Tests")
+    class ResponseBodyTests {
+
+        @Test
+        @DisplayName("Test that name is not empty")
+        void TestThatNameIsNotEmptyString() {
+            assertThat(dto.getName(), is(not(emptyString())));
+        }
+
+        @Test
+        @DisplayName("Test that name is not null")
+        void TestThatNameIsNotNull() {
+            assertThat(dto.getName(), is(notNullValue()));
+        }
+
+        @Test
+        @DisplayName("Test that cost in credits is not empty")
+        void TestThatCostInCreditsIsNotEmptyString() {
+            assertThat(dto.getCostInCredits(), is(not(emptyString())));
+        }
+
+        @Test
+        @DisplayName("Test that cost in credits is not null")
+        void TestThatCostInCreditsIsNotNull() {
+            assertThat(dto.getCostInCredits(), is(notNullValue()));
+        }
+
+        @Test
+        @DisplayName("Test that max atmosphering speed is not empty")
+        void TestThatMaxAtmospheringSpeedIsNotEmptyString() {
+            assertThat(dto.getMaxAtmospheringSpeed(), is(not(emptyString())));
+        }
+
+        @Test
+        @DisplayName("Test that max atmosphering speed is not null")
+        void TestThatMaxAtmospheringSpeedIsNotNull() {
+            assertThat(dto.getMaxAtmospheringSpeed(), is(notNullValue()));
+        }
+
+        @Test
+        @DisplayName("Test that films is not empty")
+        void TestThatFilmsIsNotEmptyArray() {
+            assertThat(dto.getFilms(), is(not(empty())));
+        }
+
+        @Test
+        @DisplayName("Test that films is not null")
+        void TestThatFilmsIsNotNull() {
+            assertThat(dto.getFilms(), is(notNullValue()));
+        }
+
+        @Test
+        @DisplayName("Test that created date is not empty")
+        void TestThatCreatedDateIsNotEmptyString() {
+            assertThat(dto.getCreated(), is(not(emptyString())));
+        }
+
+        @Test
+        @DisplayName("Test that created date is not null")
+        void TestThatCreatedDateIsNotNull() {
+            assertThat(dto.getCreated(), is(notNullValue()));
+        }
+
+        @Test
+        @DisplayName("Test that url is not empty")
+        void TestThatUrlIsNotEmptyString() {
+            assertThat(dto.getUrl(), is(not(emptyString())));
+        }
+
+        @Test
+        @DisplayName("Test that url is not null")
+        void TestThatUrlIsNotNull() {
+            assertThat(dto.getUrl(), is(notNullValue()));
+        }
+
+    }
+
 
 
 }
