@@ -18,7 +18,7 @@ public class VehicleDTO {
 	private String passengers;
 
 	@JsonProperty("pilots")
-	private List<Object> pilots;
+	private String[] pilots;
 
 	@JsonProperty("edited")
 	private String edited;
@@ -84,7 +84,7 @@ public class VehicleDTO {
 		}
 	}
 
-	public List<Object> getPilots(){
+	public String[] getPilots(){
 		return pilots;
 	}
 

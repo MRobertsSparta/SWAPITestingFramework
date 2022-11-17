@@ -16,6 +16,9 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -278,6 +281,87 @@ public class SWAPIVehicleTest {
             @DisplayName("Check that consumables is not null or empty")
             void checkConsumablesNotNullOrEmpty(String testInput){
                 Assertions.assertNotEquals(testInput, vehicleDTO.getConsumables());
+            }
+        }
+
+        @Nested
+        class FilmsTests{
+            @ParameterizedTest
+            @NullAndEmptySource
+            @DisplayName("Check that the films list is not null or empty")
+            void checkFilmsListNotNullOrEmpty(List<String> filmsList){
+                Assertions.assertNotEquals(filmsList, vehicleDTO.getFilms());
+            }
+        }
+
+        @Nested
+        class PilotsTests{
+            @ParameterizedTest
+            @NullAndEmptySource
+            @DisplayName("Check that the pilots list is not null or empty")
+            void checkPilotsListNotNullOrEmpty(String[] pilotsList){
+                Assertions.assertNotEquals(pilotsList, vehicleDTO.getPilots());
+            }
+        }
+
+        @Nested
+        class URLTests{
+            @ParameterizedTest
+            @NullAndEmptySource
+            @DisplayName("Check that the URL is not null or empty")
+            void checkURLNotNullOrEmpty(String testURL){
+                Assertions.assertNotEquals(testURL, vehicleDTO.getUrl());
+            }
+
+            @Test
+            @DisplayName("Check that URL is valid")
+            void checkURLIsValid(){
+                Assertions.assertTrue(vehicleDTO.getUrl() == null || UriValidator.isUri(vehicleDTO.getUrl()));
+            }
+        }
+
+        @Nested
+        class DatesTests{
+            @ParameterizedTest
+            @NullAndEmptySource
+            @DisplayName("Check that Created Date is not null or empty")
+            void checkCreatedDateNotNullOrEmpty(String testInput){
+                Assertions.assertNotEquals(testInput, vehicleDTO.getCreated());
+            }
+
+            @ParameterizedTest
+            @NullAndEmptySource
+            @DisplayName("Check that the Edited Date is not null or empty")
+            void checkEditedDateNotNullOrEmpty(String testInput){
+                Assertions.assertNotEquals(testInput, vehicleDTO.getEdited());
+            }
+
+            @Test
+            @DisplayName("Check that the Created Date is in valid format")
+            void checkCreatedDateValidFormat(){
+                boolean parsableDate = false;
+
+                try {
+                    LocalDate.parse(vehicleDTO.getCreated(), DateTimeFormatter.ISO_DATE_TIME);
+                    parsableDate = true;
+                } catch (DateTimeParseException e) {
+                    e.printStackTrace();
+                }
+                Assertions.assertTrue(parsableDate);
+            }
+
+            @Test
+            @DisplayName("Check that the Edited Date is in valid format")
+            void checkEditedDateValidFormat(){
+                boolean parsableDate = false;
+
+                try {
+                    LocalDate.parse(vehicleDTO.getEdited(), DateTimeFormatter.ISO_DATE_TIME);
+                    parsableDate = true;
+                } catch (DateTimeParseException e) {
+                    e.printStackTrace();
+                }
+                Assertions.assertTrue(parsableDate);
             }
         }
     }
