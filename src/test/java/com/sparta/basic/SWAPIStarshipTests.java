@@ -12,6 +12,10 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -93,6 +97,12 @@ public class SWAPIStarshipTests {
         }
 
         @Test
+        @DisplayName("Test that cost in credits is valid non negative int")
+        void TestThatCostInCreditsIsValidNonNegativeInt() {
+            assertThat(Integer.parseInt(dto.getCostInCredits()), is(not(lessThan(0))));
+        }
+
+        @Test
         @DisplayName("Test that max atmosphering speed is not empty")
         void TestThatMaxAtmospheringSpeedIsNotEmptyString() {
             assertThat(dto.getMaxAtmospheringSpeed(), is(not(emptyString())));
@@ -105,9 +115,23 @@ public class SWAPIStarshipTests {
         }
 
         @Test
-        @DisplayName("Test that films is not empty")
-        void TestThatFilmsIsNotEmptyArray() {
-            assertThat(dto.getFilms(), is(not(empty())));
+        @DisplayName("Test that max atmosphering speed is parsable to int or is N/A")
+        void TestThatMaxAtmospheringSpeedIsParsableToIntOrIsNA() {
+            String maxAtmospheringSpeed = dto.getMaxAtmospheringSpeed();
+            boolean acceptableValue = false;
+
+            try {
+                Integer.parseInt(maxAtmospheringSpeed);
+                acceptableValue = true;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+            if (maxAtmospheringSpeed.equals("N/A")) {
+                acceptableValue = true;
+            }
+
+            assertThat(acceptableValue, is(true));
         }
 
         @Test
@@ -129,6 +153,21 @@ public class SWAPIStarshipTests {
         }
 
         @Test
+        @DisplayName("Test that created date is valid according to ISO 8601")
+        void TestThatCreatedDateIsValidForISO8601() {
+            boolean parsableDate = false;
+
+            try {
+                LocalDate date = LocalDate.parse(dto.getCreated(), DateTimeFormatter.ISO_DATE_TIME);
+                parsableDate = true;
+            } catch (DateTimeParseException e) {
+                e.printStackTrace();
+            }
+
+            assertThat(parsableDate, is(true));
+        }
+
+        @Test
         @DisplayName("Test that url is not empty")
         void TestThatUrlIsNotEmptyString() {
             assertThat(dto.getUrl(), is(not(emptyString())));
@@ -138,6 +177,12 @@ public class SWAPIStarshipTests {
         @DisplayName("Test that url is not null")
         void TestThatUrlIsNotNull() {
             assertThat(dto.getUrl(), is(notNullValue()));
+        }
+
+        @Test
+        @DisplayName("Test that url is valid and part of api")
+        void TestThatUrlIsValidAndPartOfAPI() {
+            assertThat(dto.getUrl(), matchesPattern("(https?:\\/{2}swapi\\.dev\\/api\\/[a-zA-Z\\d.\\-_~:\\/?#\\[\\]@!$&'()*,+;%=]*)?"));
         }
 
     }
