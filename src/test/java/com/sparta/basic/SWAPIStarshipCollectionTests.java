@@ -12,6 +12,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+
 public class SWAPIStarshipCollectionTests {
 
     private static HttpClient client;
@@ -55,9 +59,13 @@ public class SWAPIStarshipCollectionTests {
         @Test
         @DisplayName("Test that status code is 200")
         void TestThatStatusCodeIs200() {
-
             Assertions.assertEquals(200, response.statusCode());
         }
 
+        @Nested
+        @DisplayName("Response Header Tests")
+        class ResponseHeaderTests {
+
+        }
     }
 }

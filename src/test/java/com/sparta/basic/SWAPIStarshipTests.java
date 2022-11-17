@@ -17,9 +17,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.is;
 
 public class SWAPIStarshipTests {
 
@@ -158,7 +157,7 @@ public class SWAPIStarshipTests {
             boolean parsableDate = false;
 
             try {
-                LocalDate date = LocalDate.parse(dto.getCreated(), DateTimeFormatter.ISO_DATE_TIME);
+                LocalDate.parse(dto.getCreated(), DateTimeFormatter.ISO_DATE_TIME);
                 parsableDate = true;
             } catch (DateTimeParseException e) {
                 e.printStackTrace();
