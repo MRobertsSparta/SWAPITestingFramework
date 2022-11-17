@@ -2,8 +2,6 @@ package com.sparta.framework.injection;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.framework.dto.PersonCollectionDTO;
-import com.sparta.framework.dto.PersonDTO;
 import com.sparta.framework.exception.ConnectionManagementException;
 
 public class Injector {

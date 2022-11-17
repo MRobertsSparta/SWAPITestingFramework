@@ -1,7 +1,5 @@
 package com.sparta.framework.connection;
 
-import com.sparta.framework.dto.PersonDTO;
-import com.sparta.framework.dto.SWAPIDTO;
 import com.sparta.framework.exception.ConnectionManagementException;
 import com.sparta.framework.injection.Injector;
 
