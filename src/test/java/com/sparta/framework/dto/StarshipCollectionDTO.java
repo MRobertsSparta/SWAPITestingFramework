@@ -13,7 +13,7 @@ public class StarshipCollectionDTO {
     private String next;
 
     @JsonProperty("previous")
-    private Object previous;
+    private String previous;
 
     @JsonProperty("count")
     private Integer count;
@@ -25,7 +25,7 @@ public class StarshipCollectionDTO {
         return next;
     }
 
-    public Object getPrevious(){
+    public String getPrevious(){
         return previous;
     }
 
