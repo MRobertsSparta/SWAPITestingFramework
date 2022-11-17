@@ -40,10 +40,10 @@ public class SWAPIVehicleTest {
         try {
             //Builder pattern
             request = HttpRequest.newBuilder()
-                    .uri(new URI("https://swapi.dev/api/vehicles/"))
+                    .uri(new URI("https://swapi.dev/api/vehicles/?format=json"))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            vehicleCollectionDTO = mapper.readValue(new URL("https://swapi.dev/api/vehicles/"), VehicleCollectionDTO.class);
+            vehicleCollectionDTO = mapper.readValue(new URL("https://swapi.dev/api/vehicles/?format=json"), VehicleCollectionDTO.class);
             vehicleDTO = vehicleCollectionDTO.getResults().get(0);
 
         } catch (URISyntaxException | IOException | InterruptedException e) {
@@ -139,7 +139,7 @@ public class SWAPIVehicleTest {
         void checkVehicleFourExists(){
             try {
                 vehicleDTO = null;
-                vehicleDTO = mapper.readValue(new URL("https://swapi.dev/api/vehicles/4/"), VehicleDTO.class);
+                vehicleDTO = mapper.readValue(new URL("https://swapi.dev/api/vehicles/4/?format=json"), VehicleDTO.class);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
