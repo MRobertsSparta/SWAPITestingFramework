@@ -52,7 +52,7 @@ public class SWAPIPeopleTest {
         }
 
         @Test
-        @DisplayName("Test that the server is cowboy")
+        @DisplayName("Test that the server is nginx/1.16.1")
         void testServer() {
             assertThat(headers.get("Server").get(0), equalTo("nginx/1.16.1"));
         }
