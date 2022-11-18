@@ -62,31 +62,7 @@ public class SWAPIFrameworkVehicleTests {
         @Test
         @DisplayName("Check list of vehicles size matches the count")
         void checkVehiclesCountMatchesListTotal(){
-            ObjectMapper mapper = new ObjectMapper();
-            //list for storing vehicles
-            List<VehicleDTO> vehiclesList = new ArrayList<>();
-            do
-            {
-                vehiclesList.addAll(vehicleCollectionDTO.getResults());
-                try {
-                    //move onto next page
-                    vehicleCollectionDTO = mapper.readValue(new URL(vehicleCollectionDTO.getNext()), VehicleCollectionDTO.class);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                //before stopping the loop, add the last results list
-                if(vehicleCollectionDTO.getNext() == null){
-                    vehiclesList.addAll(vehicleCollectionDTO.getResults());
-                }
-            }while(vehicleCollectionDTO.getNext() != null);
-
-            /*for (VehicleDTO vehicle: vehiclesList) {
-                System.out.println(vehicle.getConsumables());
-            }*/
-
-            //now that all vehicles have been added to a list
-            //compare size with the .getCount from the JSON response
-            Assertions.assertEquals(vehicleCollectionDTO.getCount(), vehiclesList.size());
+            Assertions.assertEquals(vehicleCollectionDTO.getCount(), vehicleCollectionDTO.getTotalResultsSize());
         }
 
 

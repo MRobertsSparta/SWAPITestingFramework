@@ -1,7 +1,9 @@
 package com.sparta.framework.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sparta.framework.connection.ConnectionManager;
 
 public class VehicleCollectionDTO {
 
@@ -43,4 +45,21 @@ public class VehicleCollectionDTO {
 			",results = '" + results + '\'' +
 			"}";
 		}
+
+	//convenience method - gets number of all results since the results list is split into 4 pages
+
+	public int getTotalResultsSize() {
+		List<VehicleDTO> vehicleList = new ArrayList<>();
+		VehicleCollectionDTO vehicleCollectionDTO = this;
+
+		while(vehicleCollectionDTO.getNext() != null) {
+			vehicleList.addAll(vehicleCollectionDTO.getResults());
+			vehicleCollectionDTO = ConnectionManager.from().URL(vehicleCollectionDTO.getNext()).getResponse().getBodyAs(VehicleCollectionDTO.class);
+
+			if(vehicleCollectionDTO.getNext() == null){
+				vehicleList.addAll(vehicleCollectionDTO.getResults());
+			}
+		}
+		return vehicleList.size();
+	}
 }
