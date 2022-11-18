@@ -61,13 +61,6 @@ public class SWAPIFrameworkPlanetTests {
         @Nested
         @DisplayName("Response Body Tests")
         class PlanetTests {
-            //status code
-            @Test
-            @DisplayName("Check That The Status Code is 200")
-            void checkThatTheStatusCodeIs200() {
-                Assertions.assertEquals(200, response.getStatusCode());
-            }
-
             //name
             @Test
             @DisplayName("Check that the planet name has a capital letter")
