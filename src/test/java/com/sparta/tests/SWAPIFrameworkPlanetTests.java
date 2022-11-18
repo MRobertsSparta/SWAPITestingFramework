@@ -239,7 +239,7 @@ public class SWAPIFrameworkPlanetTests {
             @Test
             @DisplayName("Check list of Planet size matches the count")
             void checkPlanetCountMatchesListTotal() {
-                Assertions.assertEquals(collectionDto.getCount(), collectionDto.getTotalSize(collectionDto));
+                Assertions.assertEquals(collectionDto.getCount(), collectionDto.getTotalSize());
             }
 
             @ParameterizedTest
