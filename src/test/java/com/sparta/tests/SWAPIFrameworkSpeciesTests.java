@@ -1,4 +1,4 @@
-package com.sparta.framework.tests;
+package com.sparta.tests;
 
 import com.sparta.framework.connection.ConnectionResponse;
 import com.sparta.framework.dto.SpeciesCollectionDTO;
