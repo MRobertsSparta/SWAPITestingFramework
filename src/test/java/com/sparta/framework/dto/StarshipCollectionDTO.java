@@ -1,6 +1,7 @@
 package com.sparta.framework.dto;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.framework.SWAPIRegex;
 import org.junit.jupiter.api.Assertions;
 
 import static com.sparta.framework.connection.ConnectionManager.from;
@@ -66,7 +68,35 @@ public class StarshipCollectionDTO {
         return collectionDTO.getCount() == starshipList.size();
     }
 
+    public boolean fieldIsValidSWAPIURL(String field) {
+        String value = "";
+        try {
+            Field f = getClass().getDeclaredField(field);
+            value = (String) f.get(this);
+        } catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
+            System.err.println(e);
+            return false;
+        }
+        return value.matches(SWAPIRegex.URL_PATTERN);
+    }
 
+    public boolean fieldIsValidSWAPIURList(String field) {
+        List<String> value = new ArrayList<>();
+        try {
+            Field f = getClass().getDeclaredField(field);
+            value = (List<String>) f.get(this);
+
+        } catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
+            System.err.println(e);
+            return false;
+        }
+        for (String url: value) {
+            if (!url.matches(SWAPIRegex.URL_PATTERN)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
      public String toString(){

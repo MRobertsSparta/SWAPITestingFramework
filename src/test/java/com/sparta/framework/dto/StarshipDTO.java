@@ -1,9 +1,15 @@
 package com.sparta.framework.dto;
 
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sparta.framework.SWAPIRegex;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StarshipDTO {
@@ -132,6 +138,69 @@ public class StarshipDTO {
 
     public String getModel(){
         return model;
+    }
+
+    public boolean isCostInCreditsAValidNonNegativeInt() { return Integer.parseInt(costInCredits) >= 0; }
+
+    public boolean isMaxAtmospheringSpeedAParsableIntOrNA() {
+        boolean acceptableValue = false;
+
+        try {
+            Integer.parseInt(maxAtmospheringSpeed);
+            acceptableValue = true;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        if (maxAtmospheringSpeed.equals("N/A")) {
+            acceptableValue = true;
+        }
+
+        return acceptableValue;
+    }
+
+    // According to ISO 8601
+    public boolean isCreatedDateInValidFormat() {
+        boolean parsableDate = false;
+
+        try {
+            LocalDate.parse(created, DateTimeFormatter.ISO_DATE_TIME);
+            parsableDate = true;
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+        }
+
+        return parsableDate;
+    }
+
+    public boolean fieldIsValidSWAPIURL(String field) {
+        String value = "";
+        try {
+            Field f = getClass().getDeclaredField(field);
+            value = (String) f.get(this);
+        } catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
+            System.err.println(e);
+            return false;
+        }
+        return value.matches(SWAPIRegex.URL_PATTERN);
+    }
+
+    public boolean fieldIsValidSWAPIURList(String field) {
+        List<String> value = new ArrayList<>();
+        try {
+            Field f = getClass().getDeclaredField(field);
+            value = (List<String>) f.get(this);
+
+        } catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
+            System.err.println(e);
+            return false;
+        }
+        for (String url: value) {
+            if (!url.matches(SWAPIRegex.URL_PATTERN)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

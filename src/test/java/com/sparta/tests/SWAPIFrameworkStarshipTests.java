@@ -96,13 +96,13 @@ public class SWAPIFrameworkStarshipTests {
             @Test
             @DisplayName("Check that the Next link is valid or null")
             void checkThatNextLinkIsValid(){
-                Assertions.assertTrue(collectionDTO.getNext() == null || UriValidator.isUri(collectionDTO.getNext()));
+                Assertions.assertTrue(collectionDTO.getNext() == null || collectionDTO.fieldIsValidSWAPIURL("next"));
             }
 
             @Test
             @DisplayName("Check that the Previous link is valid or null")
             void checkThatPreviousLinkIsValid(){
-                Assertions.assertTrue(collectionDTO.getPrevious() == null || UriValidator.isUri(collectionDTO.getPrevious()));
+                Assertions.assertTrue(collectionDTO.getPrevious() == null || collectionDTO.fieldIsValidSWAPIURL(collectionDTO.getPrevious()));
             }
         }
     }
@@ -162,7 +162,7 @@ public class SWAPIFrameworkStarshipTests {
             @Test
             @DisplayName("Test that cost in credits is valid non negative int")
             void TestThatCostInCreditsIsValidNonNegativeInt() {
-                assertThat(Integer.parseInt(dto.getCostInCredits()), is(not(lessThan(0))));
+                assertThat(dto.isCostInCreditsAValidNonNegativeInt(), is(true));
             }
 
             @Test
@@ -180,21 +180,7 @@ public class SWAPIFrameworkStarshipTests {
             @Test
             @DisplayName("Test that max atmosphering speed is parsable to int or is N/A")
             void TestThatMaxAtmospheringSpeedIsParsableToIntOrIsNA() {
-                String maxAtmospheringSpeed = dto.getMaxAtmospheringSpeed();
-                boolean acceptableValue = false;
-
-                try {
-                    Integer.parseInt(maxAtmospheringSpeed);
-                    acceptableValue = true;
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-
-                if (maxAtmospheringSpeed.equals("N/A")) {
-                    acceptableValue = true;
-                }
-
-                assertThat(acceptableValue, is(true));
+                assertThat(dto.isMaxAtmospheringSpeedAParsableIntOrNA(), is(true));
             }
 
             @Test
@@ -218,16 +204,7 @@ public class SWAPIFrameworkStarshipTests {
             @Test
             @DisplayName("Test that created date is valid according to ISO 8601")
             void TestThatCreatedDateIsValidForISO8601() {
-                boolean parsableDate = false;
-
-                try {
-                    LocalDate.parse(dto.getCreated(), DateTimeFormatter.ISO_DATE_TIME);
-                    parsableDate = true;
-                } catch (DateTimeParseException e) {
-                    e.printStackTrace();
-                }
-
-                assertThat(parsableDate, is(true));
+                assertThat(dto.isCreatedDateInValidFormat(), is(true));
             }
 
             @Test
@@ -245,7 +222,7 @@ public class SWAPIFrameworkStarshipTests {
             @Test
             @DisplayName("Test that url is valid and part of api")
             void TestThatUrlIsValidAndPartOfAPI() {
-                assertThat(dto.getUrl(), matchesPattern("(https?:\\/{2}swapi\\.dev\\/api\\/[a-zA-Z\\d.\\-_~:\\/?#\\[\\]@!$&'()*,+;%=]*)?"));
+                assertThat(dto.fieldIsValidSWAPIURL("url"), is(true));
             }
         }
 
