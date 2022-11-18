@@ -16,6 +16,7 @@ Gurjeev.**
   * [Without Framework](#without-framework)
   * [With Framework](#with-framework)
 * [**BDD And Cucumber**](#bdd-and-cucumber)
+* [**Testing Coverage**](#testing-coverage)
 
 ## About Project
 
@@ -62,14 +63,14 @@ git clone https://github.com/MRobertsSparta/SWAPITestingFramework.git
 ```
 
 # Testing Framework Structure
-* connection
+* **connection**
   * Connection Manager
   * Connection Response
   
-* injection
+* **injection**
   * Injector
   
-* dto
+* **dto**
   * FilmsCollectionDTO
   * FilmsDTO
   * PeopleCollectionDTO
@@ -83,7 +84,7 @@ git clone https://github.com/MRobertsSparta/SWAPITestingFramework.git
   * VehicleCollectionDTO
   * VehicleDTO
 
-* SWAPIRegex
+* **SWAPIRegex**
 
 # Endpoint Testing Examples
 
@@ -162,3 +163,5 @@ git clone https://github.com/MRobertsSparta/SWAPITestingFramework.git
 ## HTML File on Planets Features Tested on Cucumber 
 
 ![html_file](https://github.com/MRobertsSparta/SWAPITestingFramework/blob/dev/programscreenshots/htmlfile.png)
+
+# Testing Coverage
