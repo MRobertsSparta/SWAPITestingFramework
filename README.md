@@ -141,6 +141,18 @@ git clone https://github.com/MRobertsSparta/SWAPITestingFramework.git
 
 ## With Framework
 
+### Connection setUp
+
+```
+    @BeforeAll
+    static void setupAll() {
+        response = ConnectionManager.from().baseURL().slash("vehicles").getResponse();
+        vehicleCollectionDTO = response.getBodyAs(VehicleCollectionDTO.class);
+        vehicleDTO = vehicleCollectionDTO.getResults().get(0);
+    }
+
+```
+
 ### Test for Checking list of starships matches the count for Starships Endpoint
 
 ```
