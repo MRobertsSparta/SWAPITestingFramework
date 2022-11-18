@@ -1,51 +1,38 @@
 package com.sparta.framework.dto;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class FilmsCollectionDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PlanetCollection {
 
 	@JsonProperty("next")
 	private String next;
 
 	@JsonProperty("previous")
-	private String previous;
+	private static Object previous;
 
 	@JsonProperty("count")
 	private int count;
 
 	@JsonProperty("results")
-	private List<FilmsDTO> results;
-
-	public void setNext(String next){
-		this.next = next;
-	}
+	private List<PlanetsDto> results;
 
 	public String getNext(){
 		return next;
 	}
 
-	public void setPrevious(String previous){
-		this.previous = previous;
-	}
-
-	public String getPrevious(){
+	public static Object getPrevious(){
 		return previous;
-	}
-
-	public void setCount(int count){
-		this.count = count;
 	}
 
 	public int getCount(){
 		return count;
 	}
 
-	public void setResults(List<FilmsDTO> results){
-		this.results = results;
-	}
-
-	public List<FilmsDTO> getResults(){
+	public List<PlanetsDto> getResults(){
 		return results;
 	}
 
