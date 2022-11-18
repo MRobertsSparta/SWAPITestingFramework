@@ -16,7 +16,6 @@ Gurjeev.**
   * [Without Framework](#without-framework)
   * [With Framework](#with-framework)
 * [**BDD And Cucumber**](#bdd-and-cucumber)
-* [**Testing Coverage**](#testing-coverage)
 
 ## About Project
 
@@ -175,5 +174,3 @@ git clone https://github.com/MRobertsSparta/SWAPITestingFramework.git
 ## HTML File on Planets Features Tested on Cucumber 
 
 ![html_file](https://github.com/MRobertsSparta/SWAPITestingFramework/blob/dev/programscreenshots/htmlfile.png)
-
-# Testing Coverage
