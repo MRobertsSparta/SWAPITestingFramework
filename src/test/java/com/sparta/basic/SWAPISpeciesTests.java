@@ -30,7 +30,7 @@ public class SWAPISpeciesTests {
     private static HttpClient client;
     private static HttpRequest request;
     private static HttpResponse<String> response;
-    private static ObjectMapper mapper;
+    public static ObjectMapper mapper;
 
     private static SpeciesDTO speciesDTO;
 

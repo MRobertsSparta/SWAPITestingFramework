@@ -136,12 +136,12 @@ public class SpeciesDTO {
 		return NumberUtils.isParsable(height);
 	}
 
-	public boolean validSWAPIUrl(String url){
-		return url.equals(URL_PATTERN);
+	public boolean validSWAPIUrl(){
+		return homeworld.matches(SWAPIRegex.URL_PATTERN);
 	}
 
-	public boolean validStartsWithUpperCasePattern(String string){
-		return string.equals(STARTS_WITH_UPPERCASE_PATTERN);
+	public boolean validStartsWithUpperCasePattern(){
+		return name.matches(SWAPIRegex.STARTS_WITH_UPPERCASE_PATTERN);
 	}
 
 	@Override

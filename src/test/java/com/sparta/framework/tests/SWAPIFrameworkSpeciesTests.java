@@ -1,28 +1,13 @@
 package com.sparta.framework.tests;
 
-package com.sparta.basic;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.framework.connection.ConnectionResponse;
 import com.sparta.framework.dto.SpeciesCollectionDTO;
 import com.sparta.framework.dto.SpeciesDTO;
 import io.restassured.internal.UriValidator;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.sparta.framework.connection.ConnectionManager.from;
@@ -76,33 +61,27 @@ public class SWAPIFrameworkSpeciesTests {
 
         }
 
-        @Test
+        @Nested
         @DisplayName("Testing the response body")
-        class ResponseBodyTests(){
+        class ResponseBodyTests{
+
+            @Test
+            @DisplayName("Check count is not lower than 0")
+            void checkCountNotLowerThanZero() {
+                Assertions.assertTrue(speciesCollectionDTO.getCount() >= 0);
+            }
+
+            @Test
+            @DisplayName("Check that result length is greater than 0 if count is also greater than 0")
+            void checkResultLengthGreaterThanZero() {
+                Assumptions.assumeTrue(speciesCollectionDTO.getCount() > 0);
+                Assertions.assertTrue(speciesCollectionDTO.getResults().size() > 0);
+            }
 
             @Test
             @DisplayName("Check list of species size matches the count")
-            void checkSpeciesCountMatchesListTotal(){
-                //list for storing vehicles
-                List<SpeciesDTO> speciesList = new ArrayList<>();
-                do
-                {
-                    speciesList.addAll(speciesCollectionDTO.getResults());
-                    try {
-                        //move onto next page
-                        speciesCollectionDTO = mapper.readValue(new URL(speciesCollectionDTO.getNext()), SpeciesCollectionDTO.class);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    //before stopping the loop, add the last results list
-                    if(speciesCollectionDTO.getNext() == null){
-                        speciesList.addAll(speciesCollectionDTO.getResults());
-                    }
-                }while(speciesCollectionDTO.getNext() != null);
-
-                //now that all vehicles have been added to a list
-                //compare size with the .getCount from the JSON response
-                Assertions.assertEquals(speciesCollectionDTO.getCount(), speciesList.size());
+            void checkSpeciesCountMatchesListTotal() {
+                Assertions.assertEquals(speciesCollectionDTO.getCount(), speciesCollectionDTO.getTotalSpecies());
             }
 
             @ParameterizedTest
@@ -112,17 +91,19 @@ public class SWAPIFrameworkSpeciesTests {
                 Assertions.assertNotEquals(testList, speciesCollectionDTO.getResults());
             }
 
-            @Test
-            @DisplayName("Check that the Next link is valid or null")
-            void checkThatNextLinkIsValid(){
-                Assertions.assertTrue(speciesCollectionDTO.getNext() == null || UriValidator.isUri(speciesCollectionDTO.getNext()));
+            @ParameterizedTest
+            @NullAndEmptySource
+            @DisplayName("Check that results list is not empty or null")
+            void checkVehiclesListIsNotNullOrEmpty(List<SpeciesDTO> testList) {
+                Assertions.assertNotEquals(testList, speciesCollectionDTO.getResults());
             }
 
             @Test
-            @DisplayName("Check that the Previous link is valid or null")
-            void checkThatPreviousLinkIsValid(){
-                Assertions.assertTrue(speciesCollectionDTO.getPrevious() == null || UriValidator.isUri((String) speciesCollectionDTO.getPrevious()));
+            @DisplayName("Check that the Next link is valid or null")
+            void checkThatNextLinkIsValid() {
+                Assertions.assertTrue(speciesCollectionDTO.getNext() == null || UriValidator.isUri(speciesCollectionDTO.getNext()));
             }
+
 
         }
 
@@ -176,7 +157,7 @@ public class SWAPIFrameworkSpeciesTests {
                 @Test
                 @DisplayName("Check if name of result body starts with a capital letter followed by lowercase letters")
                 void checkIfNameOfResultBodyStartsWithACapitalLetterFollowedByLowerCaseLetters() {
-                    Assertions.assertTrue(speciesDTO.validStartsWithUpperCasePattern(speciesDTO.getName()));
+                    Assertions.assertTrue(speciesDTO.validStartsWithUpperCasePattern());
                 }
 
             }
@@ -211,7 +192,7 @@ public class SWAPIFrameworkSpeciesTests {
                 @Test
                 @DisplayName("Check that Homeworld is valid")
                 void checkURLIsValid() {
-                    Assertions.assertTrue(speciesDTO.getHomeworld() == null || speciesDTO.validSWAPIUrl(speciesDTO.getHomeworld()));
+                    Assertions.assertTrue(speciesDTO.getHomeworld() == null || speciesDTO.validSWAPIUrl());
                 }
 
             }
