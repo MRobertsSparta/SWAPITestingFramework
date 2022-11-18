@@ -14,7 +14,9 @@ public class ConnectionResponse {
 
     private HttpResponse<String> response;
 
-    protected ConnectionResponse(String URL) {
+    protected ConnectionResponse(){}
+
+    public ConnectionResponse makeRequest(String URL) throws ConnectionManagementException {
         HttpResponse<String> response = null;
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -23,12 +25,13 @@ public class ConnectionResponse {
                     .uri(new URI(URL))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | IllegalArgumentException e) {
             throw new ConnectionManagementException("Given URL, " + URL + ", is not a valid URL");
         } catch (IOException | InterruptedException e) {
             throw new ConnectionManagementException("Request could not be made: " + e.getMessage());
         }
         this.response = response;
+        return this;
     }
 
     public ConnectionResponse and() {

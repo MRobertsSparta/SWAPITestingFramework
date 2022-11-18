@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class ConnectionManager {
 
-    private static final String BASE_URL = "https://swapi.dev/api/";
+    public static final String BASE_URL = "https://swapi.dev/api/";
 
     private String URL;
     private HashMap<String, String> parameters;
@@ -28,6 +28,16 @@ public class ConnectionManager {
         return URL(BASE_URL);
     }
 
+    public ConnectionManager slash(String endpoint) {
+        if (endpoint.startsWith("/") && URL.endsWith("/")) {
+            endpoint = endpoint.substring(1);
+        } else if (!endpoint.startsWith("/") && !URL.endsWith("/")) {
+            endpoint = "/" + endpoint;
+        }
+        URL += endpoint;
+        return this;
+    }
+
     public ConnectionManager withParameter(String parameter, String value) {
         parameters.put(parameter, value);
         return this;
@@ -41,32 +51,31 @@ public class ConnectionManager {
         return withParameter(parameter, "" + value);
     }
 
-    public ConnectionManager slash(String endpoint) {
-        if (endpoint.startsWith("/")) {
-            endpoint = endpoint.substring(1);
-        }
-        URL += endpoint + "/";
-        System.out.println(URL);
-        return this;
-    }
-
     private String buildURL() {
         String finalURL = URL;
         if (finalURL.endsWith("/")) {
             finalURL.replaceAll("\\/$", "");
         }
-        if (finalURL.contains("?")) {
-            finalURL += "&";
-        } else {
-            finalURL += "?";
-        }
         for (String key: parameters.keySet()) {
+            if (finalURL.contains("?")) {
+                finalURL += "&";
+            } else {
+                finalURL += "?";
+            }
             finalURL += key + "=" + parameters.get(key);
         }
         return finalURL;
     }
 
     public ConnectionResponse getResponse() {
-        return new ConnectionResponse(buildURL());
+        return new ConnectionResponse().makeRequest(buildURL());
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public HashMap<String, String> getParameters() {
+        return parameters;
     }
 }
