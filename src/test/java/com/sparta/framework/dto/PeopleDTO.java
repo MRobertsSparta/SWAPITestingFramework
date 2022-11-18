@@ -98,20 +98,18 @@ public class PeopleDTO {
 			Field f = getClass().getDeclaredField(field);
 			value = (String) f.get(this);
 		} catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
-			System.err.println(e);
 			return false;
 		}
 		return value.matches(SWAPIRegex.URL_PATTERN);
 	}
 
-	public boolean fieldIsValidSWAPIURList(String field) {
+	public boolean fieldIsValidListOfSWAPIURLs(String field) {
 		List<String> value = new ArrayList<>();
 		try {
 			Field f = getClass().getDeclaredField(field);
 			value = (List<String>) f.get(this);
 
 		} catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
-			System.err.println(e);
 			return false;
 		}
 		for (String url: value) {

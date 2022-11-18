@@ -122,25 +122,25 @@ public class SWAPIFrameworkPeopleTests {
             @Test
             @DisplayName("Check films is an array of valid SWAPI URL")
             void checkFilms() {
-                assertTrue(peopleDTO.fieldIsValidSWAPIURList("films"));
+                assertTrue(peopleDTO.fieldIsValidSWAPIURLList("films"));
             }
 
             @Test
             @DisplayName("Check species is an array of valid SWAPI URL")
             void checkSpecies() {
-                assertTrue(peopleDTO.fieldIsValidSWAPIURList("species"));
+                assertTrue(peopleDTO.fieldIsValidSWAPIURLList("species"));
             }
 
             @Test
             @DisplayName("Check starships is an array of valid SWAPI URL")
             void checkStarships() {
-                assertTrue(peopleDTO.fieldIsValidSWAPIURList("starships"));
+                assertTrue(peopleDTO.fieldIsValidSWAPIURLList("starships"));
             }
 
             @Test
             @DisplayName("Check vehicles is an array of valid SWAPI URL")
             void checkVehicles() {
-                assertTrue(peopleDTO.fieldIsValidSWAPIURList("vehicles"));
+                assertTrue(peopleDTO.fieldIsValidSWAPIURLList("vehicles"));
             }
 
             @Test
