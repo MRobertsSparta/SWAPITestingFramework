@@ -91,25 +91,7 @@ public class SWAPIFilmsTests {
             @Test
             @DisplayName("Check list of films size matches the count")
             void checkFilmsCountMatchesListTotal(){
-                //list for storing films
-//                List<FilmsDTO> filmsList = new ArrayList<>();
-//                do
-//                {
-//                    filmsList.addAll(filmsCollectionDTO.getResults());
-//                    try {
-//                        //move onto next page
-//                        filmsCollectionDTO = mapper.readValue(new URL( filmsCollectionDTO.getNext()), FilmsCollectionDTO.class);
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                    //before stopping the loop, add the last results list
-//                    if(filmsCollectionDTO.getNext() == null){
-//                        filmsList.addAll(filmsCollectionDTO.getResults());
-//                    }
-//                }while(filmsCollectionDTO.getNext() != null);
 
-                //now that all films have been added to a list
-                //compare size with the .getCount from the JSON response
 
                 ObjectMapper mapper = new ObjectMapper();
                 FilmsCollectionDTO dto = filmsCollectionDTO;
