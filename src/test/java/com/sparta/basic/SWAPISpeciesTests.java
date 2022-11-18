@@ -1,6 +1,7 @@
 package com.sparta.basic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.framework.connection.ConnectionResponse;
 import com.sparta.framework.dto.SpeciesCollectionDTO;
 import com.sparta.framework.dto.SpeciesDTO;
 import io.restassured.internal.UriValidator;
@@ -34,7 +35,6 @@ public class SWAPISpeciesTests {
     private static SpeciesDTO speciesDTO;
 
     private static SpeciesCollectionDTO speciesCollectionDTO;
-
     @BeforeAll
     static void setUpAll() {
         mapper = new ObjectMapper();
@@ -221,7 +221,7 @@ public class SWAPISpeciesTests {
                void checkThatFilmsFieldDoesntReturnANull() {
                    Assumptions.assumeTrue(speciesDTO.getFilms() != null);
                }
-               
+
            }
 
 
