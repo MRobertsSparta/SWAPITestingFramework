@@ -1,12 +1,18 @@
 package com.sparta.framework.dto;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.framework.connection.ConnectionResponse;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlanetCollection {
+	private static ObjectMapper mapper;
 
 	@JsonProperty("next")
 	private String next;
@@ -34,6 +40,23 @@ public class PlanetCollection {
 
 	public List<PlanetsDto> getResults(){
 		return results;
+	}
+
+	public int getTotalSize(PlanetCollection collectionDto){
+		mapper = new ObjectMapper();
+		List<PlanetsDto> planetsList = new ArrayList<>();
+		do {
+			planetsList.addAll(collectionDto.getResults());
+			try {
+				collectionDto = mapper.readValue(new URL(collectionDto.getNext()), PlanetCollection.class);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			if (collectionDto.getNext() == null) {
+				planetsList.addAll(collectionDto.getResults());
+			}
+		} while (collectionDto.getNext() != null);
+		return planetsList.size();
 	}
 
 	@Override
