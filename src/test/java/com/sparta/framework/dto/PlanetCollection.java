@@ -42,9 +42,10 @@ public class PlanetCollection {
 		return results;
 	}
 
-	public int getTotalSize(PlanetCollection collectionDto){
+	public int getTotalSize(){
 		mapper = new ObjectMapper();
 		List<PlanetsDto> planetsList = new ArrayList<>();
+		PlanetCollection collectionDto = this;
 		do {
 			planetsList.addAll(collectionDto.getResults());
 			try {
