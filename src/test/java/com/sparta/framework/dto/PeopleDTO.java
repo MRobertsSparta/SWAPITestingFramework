@@ -1,7 +1,13 @@
 package com.sparta.framework.dto;
 
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sparta.framework.SWAPIRegex;
 
 public class PeopleDTO {
 
@@ -52,6 +58,69 @@ public class PeopleDTO {
 
 	@JsonProperty("height")
 	private String height;
+
+	public boolean hasValidGender() {
+		return gender.matches(SWAPIRegex.GENDER_PATTERN);
+	}
+
+	public boolean hasValidBirthYear() {
+		return birthYear.matches(SWAPIRegex.BIRTH_YEAR_PATTERN);
+	}
+
+	public boolean hasValidHeight() {
+		return height.matches(SWAPIRegex.POSITIVE_INTEGER_PATTERN);
+	}
+
+	public boolean hasValidMass() {
+		return mass.matches(SWAPIRegex.POSITIVE_INTEGER_PATTERN);
+	}
+
+	private boolean isValidISO8601Date(String date) {
+		try {
+			LocalDate.parse(date, DateTimeFormatter.ISO_DATE_TIME);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
+	}
+
+	public boolean hasValidCreationDate() {
+		return isValidISO8601Date(created);
+	}
+
+	public boolean hasValidEditedDate() {
+		return isValidISO8601Date(edited);
+	}
+
+	public boolean fieldIsValidSWAPIURL(String field) {
+		String value = "";
+		try {
+			Field f = getClass().getDeclaredField(field);
+			value = (String) f.get(this);
+		} catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
+			System.err.println(e);
+			return false;
+		}
+		return value.matches(SWAPIRegex.URL_PATTERN);
+	}
+
+	public boolean fieldIsValidSWAPIURList(String field) {
+		List<String> value = new ArrayList<>();
+		try {
+			Field f = getClass().getDeclaredField(field);
+			value = (List<String>) f.get(this);
+
+		} catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
+			System.err.println(e);
+			return false;
+		}
+		for (String url: value) {
+			if (!url.matches(SWAPIRegex.URL_PATTERN)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public List<String> getFilms(){
 		return films;
