@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FilmsCollectionDTO {
 
 	@JsonProperty("next")
-	private Object next;
+	private String next;
 
 	@JsonProperty("previous")
-	private Object previous;
+	private String previous;
 
 	@JsonProperty("count")
 	private int count;
@@ -17,19 +17,19 @@ public class FilmsCollectionDTO {
 	@JsonProperty("results")
 	private List<FilmsDTO> results;
 
-	public void setNext(Object next){
+	public void setNext(String next){
 		this.next = next;
 	}
 
-	public Object getNext(){
+	public String getNext(){
 		return next;
 	}
 
-	public void setPrevious(Object previous){
+	public void setPrevious(String previous){
 		this.previous = previous;
 	}
 
-	public Object getPrevious(){
+	public String getPrevious(){
 		return previous;
 	}
 
