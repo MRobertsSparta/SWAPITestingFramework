@@ -12,7 +12,10 @@ Gurjeev.**
     * [Dependencies](#dependencies)
 * [**Requirements**](#requirements)
 * [**Getting Started**](#getting-started)
-* [**Endpoints**](#endpoints)
+* [**Endpoint Testing Examples**](#endpoints)
+  * [Without Framework](#without-framework)
+  * [With Framework](#with-framework)
+* [**BDD And Cucumber**](#bdd-and-cucumber)
 
 ## About Project
 
@@ -67,18 +70,18 @@ git clone https://github.com/MRobertsSparta/SWAPITestingFramework.git
   * Injector
   
 * dto
- * FilmsCollectionDTO
- * FilmsDTO
- * PeopleCollectionDTO
- * PeopleDTO
- * PlanetCollectionDTO
- * PlanetsDTO
- * SpeciesCollectionDTO
- * SpeciesDTO
- * StarshipCollectionDTO
- * StarshipDTO
- * VehicleCollectionDTO
- * VehicleDTO
+  * FilmsCollectionDTO
+  * FilmsDTO
+  * PeopleCollectionDTO
+  * PeopleDTO
+  * PlanetCollectionDTO
+  * PlanetsDTO
+  * SpeciesCollectionDTO
+  * SpeciesDTO
+  * StarshipCollectionDTO
+  * StarshipDTO
+  * VehicleCollectionDTO
+  * VehicleDTO
 
 * SWAPIRegex
 
