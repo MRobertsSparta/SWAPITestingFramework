@@ -46,6 +46,8 @@ public class VehicleCollectionDTO {
 			"}";
 		}
 
+	//convenience method - gets number of all results since the results list is split into 4 pages
+
 	public int getTotalResultsSize() {
 		List<VehicleDTO> vehicleList = new ArrayList<>();
 		VehicleCollectionDTO vehicleCollectionDTO = this;
